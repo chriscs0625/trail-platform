@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "trail-platform",
   "private": true,
   "workspaces": [
     "apps/*",
