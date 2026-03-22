@@ -39,6 +39,11 @@ export const goalsRouter = router({
         userId: ctx.session.user.id,
         isArchived: false,
       },
+      include: {
+        _count: {
+          select: { habitLogs: true },
+        },
+      },
       orderBy: {
         createdAt: "desc",
       },
