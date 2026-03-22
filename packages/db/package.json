@@ -15,7 +15,8 @@
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "db:seed": "bun prisma/seed.ts"
   },
   "dependencies": {
     "@my-app/env": "*",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@my-app/config": "*",
     "prisma": "^7.4.1",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }
