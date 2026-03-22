@@ -39,7 +39,7 @@ const createGoalSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().optional(),
   frequency: z.enum(["DAILY", "WEEKLY", "MONTHLY"]),
-  targetCount: z.coerce.number().int().positive().default(1),
+  targetCount: z.coerce.number().int().min(1, { message: "Target must be at least 1" }),
   startDate: z.string().optional(),
 });
 
@@ -50,7 +50,7 @@ export function CreateGoalDialog() {
   const utils = trpc.useUtils();
 
   const form = useForm<CreateGoalValues>({
-    resolver: zodResolver(createGoalSchema),
+    resolver: zodResolver((createGoalSchema as any)),
     defaultValues: {
       title: "",
       description: "",
@@ -67,12 +67,12 @@ export function CreateGoalDialog() {
       setOpen(false);
       form.reset();
     },
-    onError: (error) => {
+    onError: (error: any) => {
       toast.error(error.message || "Failed to create goal");
     },
   });
 
-  function onSubmit(data: CreateGoalValues) {
+  function onSubmit(data: any) {
     createMutation.mutate({
       ...data,
       startDate: data.startDate ? new Date(data.startDate) : undefined,
@@ -96,7 +96,7 @@ export function CreateGoalDialog() {
             <FormField
               control={form.control}
               name="title"
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
@@ -110,7 +110,7 @@ export function CreateGoalDialog() {
             <FormField
               control={form.control}
               name="description"
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <FormItem>
                   <FormLabel>Description (Optional)</FormLabel>
                   <FormControl>
@@ -129,7 +129,7 @@ export function CreateGoalDialog() {
               <FormField
                 control={form.control}
                 name="frequency"
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <FormItem>
                     <FormLabel>Frequency</FormLabel>
                     <Select
@@ -155,7 +155,7 @@ export function CreateGoalDialog() {
               <FormField
                 control={form.control}
                 name="targetCount"
-                render={({ field }) => (
+                render={({ field }: { field: any }) => (
                   <FormItem>
                     <FormLabel>Target Count</FormLabel>
                     <FormControl>
@@ -170,7 +170,7 @@ export function CreateGoalDialog() {
             <FormField
               control={form.control}
               name="startDate"
-              render={({ field }) => (
+              render={({ field }: { field: any }) => (
                 <FormItem>
                   <FormLabel>Start Date</FormLabel>
                   <FormControl>

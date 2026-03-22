@@ -98,7 +98,7 @@ export default function GoalDetailPage() {
               <HabitCalendar
                 goalId={goal.id}
                 frequency={goal.frequency}
-                completedDates={completions?.logs.map(l => (l.completedAt as unknown as string)) || []}
+                completedDates={completions?.logs.map((l: any) => (l.completedAt as unknown as string)) || []}
                 currentDate={currentDate}
                 onDateChange={setCurrentDate}
               />

@@ -77,11 +77,11 @@ export function HabitCalendar({
           newLogs = previousData.logs.filter(l => !isSameDay(new Date(l.completedAt), targetDate));
         } else {
           newLogs = [...previousData.logs, { 
-            id: `temp-${Date.now()}`, 
-            goalId, 
-            userId: 'temp', 
-            completedAt: targetDate, 
-            note: null 
+            id: `temp-${Date.now()}`,
+            goalId,
+            userId: 'temp',
+            completedAt: targetDate.toISOString() as any,
+            note: null
           }];
         }
 
@@ -171,7 +171,7 @@ export function HabitCalendar({
         ))}
 
         {/* Actual days */}
-        {daysInMonth.map((day) => {
+        {daysInMonth.map((day: Date) => {
           const completed = parsedCompletedDates.some(completedDate => isSameDay(completedDate, day));
           const future = isFuture(day);
           const active = isToday(day);

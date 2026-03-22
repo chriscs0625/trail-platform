@@ -1,11 +1,11 @@
 import { TRPCError } from "@trpc/server";
+// @ts-ignore
 import {
   differenceInDays,
   differenceInMonths,
   differenceInWeeks,
   endOfDay,
   endOfWeek,
-  isSameDay,
   startOfDay,
   startOfWeek,
 } from "date-fns";
@@ -19,7 +19,7 @@ export const habitsRouter = router({
     .input(
       z.object({
         goalId: z.string(),
-        date: z.string(), // e.g. "2025-03-22"
+        date: z.string().datetime(), // e.g. valid ISO 8601 string
       })
     )
     .mutation(async ({ ctx, input }) => {

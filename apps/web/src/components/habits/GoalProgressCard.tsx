@@ -7,7 +7,7 @@ import { format, subDays, isSameDay } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/utils/trpc";
-import type { AppRouter } from "@my-app/api";
+import type { AppRouter } from "@my-app/api/routers/index";
 import type { inferRouterOutputs } from "@trpc/server";
 
 type RouterOutputs = inferRouterOutputs<AppRouter>;

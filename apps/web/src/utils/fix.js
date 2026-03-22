@@ -1,4 +1,5 @@
-
+const fs = require('fs');
+fs.writeFileSync('c:/Users/chris/OneDrive/Documents/trail-platform/my-app/apps/web/src/utils/trpc.ts', `
 import type { AppRouter } from "@my-app/api/routers/index";
 import { QueryCache, MutationCache, QueryClient } from "@tanstack/react-query"; 
 import { createTRPCReact } from "@trpc/react-query";
@@ -30,3 +31,4 @@ export const trpcClient = trpc.createClient({
     }),
   ],
 });
+`);

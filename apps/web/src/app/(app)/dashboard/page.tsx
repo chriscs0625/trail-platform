@@ -55,7 +55,7 @@ export default function DashboardPage() {
         </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {summary?.map((goal) => {
+          {summary?.map((goal: any) => {
             const isCompleted = goal.completedThisWeek >= goal.targetCount;
 
             return (

@@ -5,7 +5,7 @@ import { authClient } from "@/lib/auth-client";
 import { trpc } from "@/utils/trpc";
 
 export default function Dashboard({ session }: { session: typeof authClient.$Infer.Session }) {
-  const privateData = useQuery(trpc.privateData.queryOptions());
+  const privateData = trpc.privateData.useQuery();
 
   return (
     <>

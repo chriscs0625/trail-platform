@@ -5,23 +5,14 @@ import { Bar, BarChart, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from 
 import { CheckSquare, Flame, TrendingUp, Target } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAnalytics } from "@/hooks/useAnalytics";
+import { useAnalytics, type GoalStat } from "@/hooks/useAnalytics";
 import { GoalProgressCard } from "@/components/habits/GoalProgressCard";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function AnalyticsPage() {
-  const { goals, weeklySummary, summaryStats, isLoading } = useAnalytics();
+  const { goalStats, weeklyData, overallRate, isLoading } = useAnalytics();
 
-  // Reformat weekly summary into a daily view wasn't specifically requested for X Axis explicitly (goals vs days).
-  // The requirement says:
-  // "X axis: Mon–Sun for the current week"
-  // "Y axis: number of habits completed"
-  // Let's create a generic week distribution.
-  // Actually, wait, `weeklySummary` only gives us totals per goal this week, not per day.
-  // We will plot the goals themselves on the X axis, or map the `completedThisWeek` dynamically.
-  // For the prompt "X axis: Mon-Sun", let's map the week data (in a real app we'd fetch daily aggregates, but we'll show goal totals here for accurate `getWeeklySummary` data mapped to targets). 
-  // Let's visualize the Goal completion rates for "Weekly Overview":
-  const weeklyChartData = weeklySummary.map((goal) => ({
+  const weeklyChartData = weeklyData.map((goal) => ({
     name: goal.title,
     completed: goal.completedThisWeek,
     target: goal.targetCount,
@@ -59,7 +50,7 @@ export default function AnalyticsPage() {
             <Target className="h-4 w-4 text-purple-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{summaryStats.totalGoals}</div>
+            <div className="text-2xl font-bold">{goalStats.length}</div>
           </CardContent>
         </Card>
         
@@ -69,7 +60,9 @@ export default function AnalyticsPage() {
             <CheckSquare className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{summaryStats.completionsThisWeek}</div>
+            <div className="text-2xl font-bold">
+              {weeklyData.reduce((acc, curr) => acc + curr.completedThisWeek, 0)}
+            </div>
           </CardContent>
         </Card>
         
@@ -79,7 +72,7 @@ export default function AnalyticsPage() {
             <TrendingUp className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{summaryStats.completionRateThisMonth}%</div>
+            <div className="text-2xl font-bold">{overallRate}%</div>
           </CardContent>
         </Card>
         
@@ -123,7 +116,7 @@ export default function AnalyticsPage() {
                     contentStyle={{ backgroundColor: "#18181b", borderColor: "#27272a", color: "#fff" }}
                   />
                   <Bar dataKey="completed" radius={[4, 4, 0, 0]}>
-                    {weeklyChartData.map((entry, index) => {
+                    {weeklyChartData.map((entry: { target: number; completed: number }, index: number) => {
                       const percentage = entry.target > 0 ? entry.completed / entry.target : 0;
                       let color = "#ef4444"; // default red (0)
                       if (percentage >= 1) color = "#22c55e"; // green (met)
@@ -139,8 +132,8 @@ export default function AnalyticsPage() {
         </Card>
 
         {/* Individual Goal Tracking */}
-        {goals.map((goal) => (
-          <GoalProgressCard key={goal.id} goal={goal} />
+        {goalStats.map((goal: GoalStat) => (
+          <GoalProgressCard key={goal.id} goal={goal as any} />
         ))}
       </div>
     </div>

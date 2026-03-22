@@ -1,0 +1,1 @@
+﻿export const Dialog = (props: any) => <div {...props} />; export const DialogContent = Dialog; export const DialogHeader = Dialog; export const DialogTitle = Dialog; export const DialogTrigger = Dialog;

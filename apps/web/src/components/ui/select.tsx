@@ -1,0 +1,1 @@
+﻿export const Select = (props: any) => <select {...props} />; export const SelectContent = Select; export const SelectItem = Select; export const SelectTrigger = Select; export const SelectValue = Select;

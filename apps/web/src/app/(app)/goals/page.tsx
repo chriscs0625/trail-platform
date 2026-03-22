@@ -47,7 +47,7 @@ export default function GoalsPage() {
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {goals?.map((goal) => (
+          {goals?.map((goal: any) => (
             <GoalCard key={goal.id} goal={goal} />
           ))}
         </div>

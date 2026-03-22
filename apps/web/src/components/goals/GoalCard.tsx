@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { trpc } from "@/utils/trpc";
-import type { AppRouter } from "@my-app/api";
+import type { AppRouter } from "@my-app/api/routers/index";
 import type { inferRouterOutputs } from "@trpc/server";
 
 type RouterOutputs = inferRouterOutputs<AppRouter>;

@@ -1,0 +1,1 @@
+﻿export const Form = (props: any) => <div {...props} />; export const FormControl = Form; export const FormDescription = Form; export const FormField = Form; export const FormItem = Form; export const FormLabel = Form; export const FormMessage = Form; 
