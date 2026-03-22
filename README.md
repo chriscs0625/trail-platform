@@ -1,70 +1,65 @@
-# my-app
+# HabitFlow 🚀
 
-This project was created with [Better Fullstack](https://github.com/Marve10s/Better-Fullstack), a modern TypeScript stack that combines Next.js, Self, TRPC, and more.
+HabitFlow is a robust, full-stack Goal and Habit Tracking application designed for real-time progress monitoring, check-ins, streaks calculation, and detailed visual analytics. It runs on a powerful monorepo architecture leveraging Turborepo, Next.js, tRPC, Prisma, and Better Auth.
 
-## Features
+## Features ✨
 
-- **TypeScript** - For type safety and improved developer experience
-- **Next.js** - Full-stack React framework
-- **TailwindCSS** - CSS framework
-- **shadcn/ui** - UI components
-- **tRPC** - End-to-end type-safe APIs
-- **Prisma** - TypeScript-first ORM
-- **SQLite/Turso** - Database engine
-- **Authentication** - Better Auth
-- **Turborepo** - Optimized monorepo build system
+- **Goal & Habit Tracker**: Easily define daily, weekly, or monthly tracking targets.
+- **Interactive Check-off Calendar**: Rapidly verify tasks in a sleek visual calendar with optimistic UI updates.
+- **Dynamic Streak System**: Instantly calculate and display your current and longest streaks.
+- **Visual Analytics Dashboard**: View completion trends and historical data via intuitive charts (using Recharts).
+- **Secure Authentication**: Built with Better Auth for robust user, session, and credential management.
+- **Optimized UI/UX**: Crafted with Shadcn UI, Tailwind CSS, and Framer Motion micro-animations.
 
-## Getting Started
+## Tech Stack 🛠️
 
-First, install the dependencies:
+- **Framework**: Next.js 15 (App Router)
+- **Architecture**: Turborepo Monorepo
+- **API**: tRPC (Type-safe Client & Server)
+- **Database**: Prisma ORM, SQLite (local.db)
+- **Authentication**: Better Auth
+- **Styling**: Tailwind CSS
+- **Components**: Shadcn/ui (Radix Primitives), Lucide React
+- **Validation**: Zod & React Hook Form
+- **Data Visualization**: Recharts
+- **Date Utilities**: date-fns
 
-```bash
+## Getting Started 🚀
+
+### 1. Setup Instructions
+
+Clone the repository and install dependencies:
+
+`ash
 npm install
-```
+`
 
-## Database Setup
+Configure your environment variables by copying the example file:
 
-This project uses SQLite with Prisma.
+`ash
+cp .env.example .env
+`
 
-1. Start the local SQLite database (optional):
+Initialize your database schema by pushing the Prisma schema:
 
-```bash
-npm run db:local
-```
-
-2. Update your `.env` file in the `apps/web` directory with the appropriate connection details if needed.
-
-3. Apply the schema to your database:
-
-```bash
+`ash
 npm run db:push
-```
+`
 
-Then, run the development server:
+### 2. Development Server
 
-```bash
+Start the application locally:
+
+`ash
 npm run dev
-```
+`
 
-Open [http://localhost:3001](http://localhost:3001) in your browser to see the fullstack application.
+Visit http://localhost:3000 to interact with your local instance of HabitFlow!
 
-## Project Structure
+## Project Structure 📁
 
-```
-my-app/
-├── apps/
-│   └── web/         # Fullstack application (Next.js)
-├── packages/
-│   ├── api/         # API layer / business logic
-│   ├── auth/        # Authentication configuration & logic
-│   └── db/          # Database schema & queries
-```
-
-## Available Scripts
-
-- `npm run dev`: Start all applications in development mode
-- `npm run build`: Build all applications
-- `npm run check-types`: Check TypeScript types across all apps
-- `npm run db:push`: Push schema changes to database
-- `npm run db:studio`: Open database studio UI
-- `npm run db:local`: Start the local SQLite database
+- pps/web/: The frontend application built with Next.js 15 App router.
+- packages/api/: tRPC setup and all query/mutation routers.
+- packages/db/: Prisma schemas (schema.prisma, uth.prisma, goals.prisma).
+- packages/auth/: Better Auth integration code.
+- packages/env/: Shared types and environment definitions.
