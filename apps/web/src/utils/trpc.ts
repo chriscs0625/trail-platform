@@ -1,6 +1,6 @@
 import type { AppRouter } from "@my-app/api/routers/index";
 
-import { QueryCache, QueryClient } from "@tanstack/react-query";
+import { QueryCache, MutationCache, QueryClient } from "@tanstack/react-query";
 import { createTRPCClient, httpBatchLink } from "@trpc/client";
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import { toast } from "sonner";
@@ -14,6 +14,11 @@ export const queryClient = new QueryClient({
           onClick: query.invalidate,
         },
       });
+    },
+  }),
+  mutationCache: new MutationCache({
+    onError: (error) => {
+      toast.error(error.message || "An unexpected error occurred");
     },
   }),
 });

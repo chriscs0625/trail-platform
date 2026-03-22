@@ -5,7 +5,8 @@ import { CheckSquare } from "lucide-react";
 import { CreateGoalDialog } from "@/components/goals/CreateGoalDialog";
 import { GoalCard } from "@/components/goals/GoalCard";
 import { trpc } from "@/utils/trpc";
-import { Skeleton } from "@/components/ui/skeleton";
+import { GoalCardSkeleton } from "@/components/ui/GoalCardSkeleton";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
 
 export default function GoalsPage() {
   const { data: goals, isLoading, error } = trpc.goals.list.useQuery();
@@ -23,27 +24,22 @@ export default function GoalsPage() {
       </div>
 
       {isLoading ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="flex flex-col gap-2 rounded-xl border border-zinc-800 p-4">
-              <Skeleton className="h-6 w-3/4" />
-              <Skeleton className="h-4 w-1/2 mb-4" />
-              <Skeleton className="h-6 w-20 mb-4 rounded-full" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-full" />
-            </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <GoalCardSkeleton key={i} />
           ))}
         </div>
       ) : error ? (
-        <div className="rounded-lg border border-red-800 bg-red-950/50 p-4 text-red-500">
-          Error loading goals. Please try again.
-        </div>
+        <ErrorMessage 
+          title="Failed to load goals" 
+          message={error.message || "Please refresh the page or try again later."} 
+        />
       ) : goals?.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-zinc-800 py-24 text-center">
-          <div className="mb-4 rounded-full bg-zinc-900/50 p-4">
-            <CheckSquare className="h-10 w-10 text-zinc-500" />
+        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-zinc-800 py-24 text-center bg-zinc-950/50">
+          <div className="mb-4 rounded-full bg-zinc-900/80 p-4 ring-1 ring-zinc-800">
+            <CheckSquare className="h-12 w-12 text-zinc-500" />
           </div>
-          <h3 className="mb-2 text-xl font-semibold text-zinc-200">No goals found</h3>
+          <h3 className="mb-2 text-xl font-semibold text-zinc-200">No goals yet</h3>
           <p className="mb-6 max-w-sm text-sm text-zinc-400">
             You don't have any active goals yet. Create one to start tracking your habits and building streaks!
           </p>

@@ -2,7 +2,11 @@
 
 import { trpc } from "@/utils/trpc";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
+import { CheckSquare } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
   const { data: summary, isLoading, error } = trpc.habits.getWeeklySummary.useQuery();
@@ -35,19 +39,20 @@ export default function DashboardPage() {
           ))}
         </div>
       ) : error ? (
-        <div className="rounded-lg border border-red-800 bg-red-950/50 p-4 text-red-500">
-          Error loading dashboard data.
-        </div>
+        <ErrorMessage title="Error loading dashboard data" message={error.message || "Failed to load"} />
       ) : summary?.length === 0 ? (
-        <Card className="border-dashed bg-muted/50">
-          <CardContent className="flex flex-col items-center justify-center p-12 text-center">
-            <h3 className="mb-2 text-lg font-semibold">No goals yet</h3>
-            <p className="mb-6 text-sm text-muted-foreground">
-              You haven't set up any goals or habits. Let's change that!
-            </p>
-            {/* We'll link this out later */}
-          </CardContent>
-        </Card>
+        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-zinc-800 py-24 text-center bg-zinc-950/50">
+          <div className="mb-4 rounded-full bg-zinc-900/80 p-4 ring-1 ring-zinc-800">
+            <CheckSquare className="h-12 w-12 text-zinc-500" />
+          </div>
+          <h3 className="mb-2 text-xl font-semibold text-zinc-200">No goals yet</h3>
+          <p className="mb-6 max-w-sm text-sm text-zinc-400">
+            You don't have any active goals yet. Create one to start tracking your habits and building streaks!
+          </p>
+          <Link href="/goals">
+             <Button variant="default">Go to Goals</Button>
+          </Link>
+        </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {summary?.map((goal) => {
@@ -68,10 +73,9 @@ export default function DashboardPage() {
                   <p className="text-xs text-muted-foreground mt-1">
                     {isCompleted ? "Goal met! 🎉" : "Progress this week"}
                   </p>
-                  
-                  {/* Visual progress bar representation */}
+
                   <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-secondary">
-                    <div 
+                    <div
                       className={`h-full transition-all ${isCompleted ? 'bg-purple-500' : 'bg-primary'}`}
                       style={{ width: `${Math.min(100, (goal.completedThisWeek / goal.targetCount) * 100)}%` }}
                     />
